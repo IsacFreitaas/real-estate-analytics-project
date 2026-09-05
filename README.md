@@ -1,5 +1,7 @@
 # Real Estate Analytics Project
 
+<img src="images/real-estate-thumbnail.jpg">
+
 ## Overview
 
 ## Problem
