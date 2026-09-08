@@ -67,7 +67,7 @@ The **exploratory data analysis** that have been performed revealed several **re
 
    **Higher-income areas** generally presented **higher house values**, making `MedInc` the variable most strongly associated with the **target**.
 
-<p align="center">
+<p align="left">
   <img src="images/median-income-vs-house-value.png" width="500">
 </p>
 
@@ -75,7 +75,7 @@ The **exploratory data analysis** that have been performed revealed several **re
 
    House values **are not randomly distributed** across California. The geographic visualization suggests that **areas closer to the coast tend to concentrate higher house values**. However, this relationship was not formally quantified in this project and should therefore be interpreted as just a **interesting visual pattern**.
 
-<p align="center">
+<p align="left">
   <img src="images/geographic-distribution.png" width="500">
 </p>
 
@@ -83,7 +83,7 @@ The **exploratory data analysis** that have been performed revealed several **re
 
    A noticeable concentration of observations exists at the **maximum house value** recorded in the dataset (US$500,000). This limitation must be considered when interpreting the distribution of house values and the model predictions.
 
-<p align="center">
+<p align="left">
   <img src="images/house-value-distribution.png" width="500">
 </p>
 
@@ -125,7 +125,7 @@ The models were evaluated using **Mean Absolute Error (MAE)**, where lower value
 
 The Random Forest Regressor achieved the **best performance** among the evaluated approaches.
 
-<p align="center">
+<p align="left">
   <img src="images/model-comparison.png" width="500">
 </p>
 
@@ -137,7 +137,7 @@ Compared to Linear Regression, it achieved an additional error reduction of appr
 
 The **feature importance analysis** showed that `MedInc` was the most **influential variable** in the **Random Forest Regressor** model, reinforcing the relationship identified during the exploratory data analysis.
 
-<p align="center">
+<p align="left">
   <img src="images/feature-importance.png" width="500">
 </p>
 
@@ -219,6 +219,7 @@ Then, execute the notebooks **in the order**.
 ```text
 real-estate-analytics-project
 ├── images/
+│   └── Isac-Freitas-LinkedIn-Banner.jpg
 │   └── feature-importance.png
 │   └── geographic-distribution.png
 │   └── house-value-distribution.png
@@ -261,3 +262,9 @@ Contains **reusable Python modules** used throughout the project.
 
 * LinkedIn: https://www.linkedin.com/in/isac-freitas-16a035223/
 * Gmail: isaczeitgeist+contatogithub@gmail.com
+
+<p>
+  <img src="images/Isac-Freitas-LinkedIn-Banner.jpg">
+</p>
+
+docs: README graphics position and add LinkedIn banner
