@@ -219,6 +219,11 @@ Then, execute the notebooks **in the order**.
 ```text
 real-estate-analytics-project
 ├── images/
+│   └── feature-importance.png
+│   └── geographic-distribution.png
+│   └── house-value-distribution.png
+│   └── median-income-vs-house-value.png
+│   └── model-comparison.png
 │   └── real-estate-thumbnail.jpg
 │
 ├── notebooks/
