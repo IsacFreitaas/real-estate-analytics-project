@@ -93,23 +93,23 @@ The **exploratory data analysis** that have been performed revealed several **re
 
 ## 7. Modelling
 
-The data was divided into **training and testing sets** to evaluate the models on observations that were not used during training.
+* The data was divided into **training and testing sets** to evaluate the models on observations that were not used during training.
 
-The following approaches were evaluated:
+* The following approaches were evaluated:
 
 ### **Baseline**
 
-A simple baseline was created by **predicting the average house value** from the training data for every observation in the **test set**.
+* A simple baseline was created by **predicting the average house value** from the training data for every observation in the **test set**.
 
-This approach provides a reference for determining whether the machine learning models are **learning useful patterns from the available features**.
+* This approach provides a reference for determining whether the machine learning models are **learning useful patterns from the available features**.
 
 ### **Linear Regression model**
 
-Linear Regression was used as the first machine learning model because of its simplicity and interpretability.
+* Linear Regression was used as the first machine learning model because of its simplicity and interpretability.
 
 ### **Random Forest Regressor model**
 
-Random Forest Regressor was used as the second machine learn model to **capture more complex** and potentially non-linear **relationships between the available features and house values**.
+* Random Forest Regressor was used as the second machine learn model to **capture more complex** and potentially non-linear **relationships between the available features and house values**.
 
 ------
 
@@ -129,9 +129,9 @@ The Random Forest Regressor achieved the **best performance** among the evaluate
   <img src="images/model-comparison.png" width="500">
 </p>
 
-Compared to the baseline, the Random Forest reduced the prediction error by approximately **63.82%**.
+* Compared to the baseline, the Random Forest reduced the prediction error by approximately **63.82%**.
 
-Compared to Linear Regression, it achieved an additional error reduction of approximately **38.51%**.
+* Compared to Linear Regression, it achieved an additional error reduction of approximately **38.51%**.
 
 ------
 
@@ -266,5 +266,3 @@ Contains **reusable Python modules** used throughout the project.
 <p>
   <img src="images/Isac-Freitas-LinkedIn-Banner.jpg">
 </p>
-
-docs: README graphics position and add LinkedIn banner
