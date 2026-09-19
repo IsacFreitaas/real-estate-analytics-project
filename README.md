@@ -2,6 +2,8 @@
 
 <img src="images/real-estate-thumbnail.jpg">
 
+> **V2 in progress:** see [docs/repo_review.md](docs/repo_review.md) for the current repository review and implementation plan.
+
 ## 1. Project **Description**
 
 * In this project, I have combined **exploratory data analysis** and **machine learning to investigate** the factors associated with **real estate prices** by analyzing the relationship between socioeconomic, demographic, and geographic characteristics and house values, using the California housing dataset as **a case study**.
