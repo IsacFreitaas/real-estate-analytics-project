@@ -1,6 +1,8 @@
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
 
+from src.repro import RANDOM_STATE
+
 TARGET_COLUMN = "MedHouseVal"
 
 def load_california_housing():
@@ -34,7 +36,7 @@ def split_features_target(df, target=TARGET_COLUMN):
 
     return x, y
 
-def split_train_test(df, target=TARGET_COLUMN, test_size=0.2, random_state=42):
+def split_train_test(df, target=TARGET_COLUMN, test_size=0.2, random_state=RANDOM_STATE):
     """
     Split a DataFrame into reproducible train/test feature and target sets.
 
