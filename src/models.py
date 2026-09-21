@@ -3,8 +3,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
 
 from src.pipeline import build_model_pipeline
-
-RANDOM_STATE = 42
+from src.repro import RANDOM_STATE
 
 def build_baseline_pipeline():
     """

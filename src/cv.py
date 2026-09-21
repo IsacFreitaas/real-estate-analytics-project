@@ -3,8 +3,10 @@ import os
 
 from sklearn.model_selection import KFold, cross_val_score
 
+from src.repro import RANDOM_STATE
+
 DEFAULT_N_SPLITS = 5
-DEFAULT_RANDOM_STATE = 42
+DEFAULT_RANDOM_STATE = RANDOM_STATE
 MAE_SCORING = "neg_mean_absolute_error"
 
 def run_cross_validation(

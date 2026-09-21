@@ -1,0 +1,14 @@
+# Locked dependency versions used to produce the reproducibility results
+# documented in docs/reproducibility.md. Generated with `pip freeze` from
+# the project's virtual environment (Python 3.14.7).
+#
+# This file documents the exact versions verified for reproducibility; it
+# does not replace requirements.txt as the primary install target.
+pandas==3.0.5
+scikit-learn==1.9.0
+matplotlib==3.11.1
+seaborn==0.13.2
+numpy==2.5.2
+scipy==1.18.1
+joblib==1.6.0
+threadpoolctl==3.6.0
