@@ -1,11 +1,13 @@
 import matplotlib.pyplot as plt
 
-def plot_model_comparison(results):
+def plot_model_comparison(results, output_path=None):
     """
     Plot MAE comparison between models.
 
     Args:
             results (pd.DataFrame): DataFrame containing model results.
+            output_path (str, optional): Save path for the plot. If omitted,
+                display the plot interactively.
     """
 
     plt.figure(figsize=(8, 5))
@@ -18,7 +20,12 @@ def plot_model_comparison(results):
     plt.xlabel("Model")
     plt.ylabel("MAE")
 
-    plt.show()
+    if output_path:
+        plt.tight_layout()
+        plt.savefig(output_path, dpi=150, bbox_inches="tight")
+        plt.close()
+    else:
+        plt.show()
 
 def plot_actual_vs_predicted(y_true, predictions):
     """
