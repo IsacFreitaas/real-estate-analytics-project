@@ -1,6 +1,7 @@
 from sklearn.dummy import DummyRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
+from xgboost import XGBRegressor
 
 from src.pipeline import build_model_pipeline
 from src.repro import RANDOM_STATE
@@ -44,6 +45,25 @@ def build_random_forest_pipeline(random_state=RANDOM_STATE):
     return build_model_pipeline(
         RandomForestRegressor(random_state=random_state))
 
+def build_xgboost_pipeline(random_state=RANDOM_STATE):
+    """
+    Build a reproducible XGBoost regression pipeline.
+
+    Args:
+            random_state (int): Seed for reproducible training.
+
+    Returns:
+            sklearn.pipeline.Pipeline: XGBoost regression pipeline.
+    """
+
+    return build_model_pipeline(
+        XGBRegressor(
+            objective="reg:squarederror",
+            eval_metric="mae",
+            random_state=random_state,
+            n_jobs=1,
+            tree_method="hist"))
+
 def get_model_pipelines():
     """
     Build all model pipelines adapted to the new architecture.
@@ -56,4 +76,5 @@ def get_model_pipelines():
         "Baseline": build_baseline_pipeline(),
         "Linear Regression": build_linear_regression_pipeline(),
         "Random Forest": build_random_forest_pipeline(),
+        "XGBoost": build_xgboost_pipeline(),
     }
