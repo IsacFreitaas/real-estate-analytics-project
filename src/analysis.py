@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def build_error_frame(y_true, predictions):
     """
     Build a DataFrame with actual values, predictions, and residuals.

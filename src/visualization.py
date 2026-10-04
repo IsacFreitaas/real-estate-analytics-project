@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 
+
 def _show_or_save(output_path=None):
     """Save the current figure to `output_path`, or display it if omitted."""
 

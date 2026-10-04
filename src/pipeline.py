@@ -2,6 +2,7 @@ from sklearn.pipeline import Pipeline
 
 from src.preprocessing import build_preprocessor
 
+
 def build_model_pipeline(model, preprocessor=None):
     """
     Build a reusable Scikit-learn Pipeline combining preprocessing and a model.
