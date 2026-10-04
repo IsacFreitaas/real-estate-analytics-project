@@ -12,12 +12,17 @@ Run with:
 
 import json
 
-from src.analysis import build_error_frame, summarize_residuals
+from src.analysis import (
+    analyze_error_by_value_range,
+    build_error_frame,
+    summarize_residuals,
+)
 from src.data import load_california_housing, split_train_test
 from src.models import build_xgboost_pipeline
 from src.tuning import save_json
 from src.visualization import (
     plot_actual_vs_predicted,
+    plot_error_by_value_range,
     plot_residual_distribution,
     plot_residuals,
 )
@@ -60,9 +65,17 @@ def main():
         error_frame["predicted"],
         output_path=f"{IMAGE_DIR}/actual-vs-predicted.png")
 
+    range_summary = analyze_error_by_value_range(error_frame)
+    range_summary.to_csv(
+        f"{OUTPUT_DIR}/error_by_value_range.csv", index=False)
+    plot_error_by_value_range(
+        range_summary,
+        output_path=f"{IMAGE_DIR}/error-by-value-range.png")
+
     print(f"Test MAE: {residual_summary['mae']:.3f}")
     print(f"Residual mean: {residual_summary['residual_mean']:.3f}")
     print(f"Residual skew: {residual_summary['residual_skew']:.3f}")
+    print(range_summary.round(3).to_string(index=False))
 
 
 if __name__ == "__main__":

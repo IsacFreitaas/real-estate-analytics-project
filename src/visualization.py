@@ -137,3 +137,26 @@ def plot_residual_distribution(residuals, output_path=None):
     plt.title("Distribution of Residuals")
 
     _show_or_save(output_path)
+def plot_error_by_value_range(range_summary, output_path=None):
+    """
+    Plot MAE and mean residual (bias) by range of the actual target value.
+
+    Args:
+        range_summary (pd.DataFrame): Output of `analyze_error_by_value_range`.
+        output_path (str, optional): Save path for the plot.
+    """
+
+    fig, (ax_mae, ax_bias) = plt.subplots(1, 2, figsize=(12, 5))
+
+    ax_mae.bar(range_summary["value_range"], range_summary["mae"])
+    ax_mae.set_xlabel("Actual House Value Range ($100k)")
+    ax_mae.set_ylabel("MAE")
+    ax_mae.set_title("MAE by Actual Value Range")
+
+    ax_bias.bar(range_summary["value_range"], range_summary["mean_residual"])
+    ax_bias.axhline(y=0, linestyle="--", color="black")
+    ax_bias.set_xlabel("Actual House Value Range ($100k)")
+    ax_bias.set_ylabel("Mean Residual (actual - predicted)")
+    ax_bias.set_title("Mean Residual by Actual Value Range")
+
+    _show_or_save(output_path)
