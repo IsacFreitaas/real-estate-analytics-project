@@ -1,0 +1,15 @@
+{
+  "test_mae": 0.2900429245140594,
+  "best_cv_mae": 0.2944932942509956,
+  "best_params": {
+    "model__colsample_bytree": 0.7979622306417505,
+    "model__gamma": 0.00036605959530379434,
+    "model__learning_rate": 0.04760153910846178,
+    "model__max_depth": 8,
+    "model__min_child_weight": 5,
+    "model__n_estimators": 307,
+    "model__reg_alpha": 0.009518332704714713,
+    "model__reg_lambda": 3.464911387927851,
+    "model__subsample": 0.8760253496991544
+  }
+}

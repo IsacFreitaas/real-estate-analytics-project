@@ -10,7 +10,7 @@
 
 * The analysis **explores the patterns** present in the dataset and evaluates whether these characteristics can be used to **predict house values**.
 
-* A baseline approach and two machine learning models were evaluated: **Linear Regression** and **Random Forest Regressor**.
+* A baseline approach and three machine learning models were evaluated: **Linear Regression**, **Random Forest Regressor**, and an optimized **XGBoost** pipeline.
 
 ## 2. Dataset
 
@@ -59,6 +59,7 @@ I have used the following **technologies and tools** throughout this project:
 - [Matplotlib](https://matplotlib.org)
 - [Seaborn](https://seaborn.pydata.org)
 - [Scikit-learn](https://scikit-learn.org/)
+- [XGBoost](https://xgboost.readthedocs.io/)
 - [Jupyter Notebook](https://jupyter.org)
 
 ## 6. Main **Insights**
@@ -113,27 +114,41 @@ The **exploratory data analysis** that have been performed revealed several **re
 
 * Random Forest Regressor was used as the second machine learn model to **capture more complex** and potentially non-linear **relationships between the available features and house values**.
 
+### **Optimized XGBoost model**
+
+* XGBoost was added as a third model and tuned with **RandomizedSearchCV** on the training set only.
+
+* The final optimized pipeline was selected using **cross-validation** and evaluated once on the untouched test set.
+
 ------
 
 ## 8. Results
 
 The models were evaluated using **Mean Absolute Error (MAE)**, where lower values indicate predictions that are, on average, closer to the **actual house values**.
 
-| Model | MAE | Average Error |
+| Model | CV MAE | Test MAE |
 |---|---:|---:|
-| Baseline | 0.906 | US$90,607 |
-| Linear Regression | 0.533 | US$53,320 |
-| Random Forest | 0.328 | US$32,784 |
+| Baseline | 0.914 | 0.906 |
+| Linear Regression | 0.529 | 0.533 |
+| Random Forest | 0.335 | 0.328 |
+| XGBoost (optimized) | 0.294 | 0.290 |
 
-The Random Forest Regressor achieved the **best performance** among the evaluated approaches.
+Among the initial baseline models, **Random Forest** was the best performer. After hyperparameter tuning,
+the **optimized XGBoost** pipeline achieved the best overall results.
 
 <p align="left">
-  <img src="images/model-comparison.png" width="500">
+   <img src="images/model-comparison-optimized-xgb.png" width="500">
 </p>
 
-* Compared to the baseline, the Random Forest reduced the prediction error by approximately **63.82%**.
+* Compared to the baseline, the optimized XGBoost reduced the final test error by approximately **67.95%**.
 
-* Compared to Linear Regression, it achieved an additional error reduction of approximately **38.51%**.
+* Compared to Random Forest, the optimized XGBoost achieved an additional test error reduction of approximately **11.59%**.
+
+<p align="left">
+   <img src="images/model-comparison.png" width="500">
+</p>
+
+The original single-split comparison remains available above for reference.
 
 ------
 
@@ -159,14 +174,12 @@ This project has some **limitations** that should be considered when interpretin
 
 3. **Simplified modelling process**
 
-   The models were evaluated using a relatively simple modelling workflow without extensive hyperparameter tuning or advanced feature engineering.
+   The project still uses a relatively simple feature set and limited feature engineering, so there is room to explore richer predictors.
 
 ------
 
 ### Possible **future improvements** include:
 
-- Hyperparameter tuning.
-- Cross-validation.
 - Feature engineering.
 - Testing **additional regression models**.
 - Using external and more recent real estate datasets.
@@ -227,6 +240,7 @@ real-estate-analytics-project
 │   └── house-value-distribution.png
 │   └── median-income-vs-house-value.png
 │   └── model-comparison.png
+│   └── model-comparison-optimized-xgb.png
 │   └── real-estate-thumbnail.jpg
 │
 ├── notebooks/
