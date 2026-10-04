@@ -160,6 +160,18 @@ The **feature importance analysis** showed that `MedInc` was the most **influent
 
 `AveOccup`, `Latitude`, and `Longitude` also contributed relevant information to the predictions.
 
+### **Error analysis**
+
+The errors of the optimized XGBoost were analyzed on the test set (see [docs/error_analysis.md](docs/error_analysis.md)):
+
+* The mean residual is close to zero, but the error **increases with the house value**: MAE is 0.198 for houses valued up to US$100,000 and 0.623 for houses above US$400,000.
+* Houses above US$400,000 are 8.2% of the test samples but account for 17.6% of the total absolute error, and the model tends to **under-predict** them.
+* Observations at the **target cap** (US$500,000) have an MAE of 0.629, against 0.274 for the remaining observations.
+
+<p align="left">
+   <img src="images/error-analysis/error-by-value-range.png" width="700">
+</p>
+
 ## 9. Limitations and Future Improvements
 
 This project has some **limitations** that should be considered when interpreting the results:
@@ -170,7 +182,9 @@ This project has some **limitations** that should be considered when interpretin
 
 2. **Upper value limit**
 
-   The target variable contains a **noticeable upper limit**, which may affect the model's ability to accurately predict some **higher-value observations**.
+   The target variable appears **censored at US$500,000** (4.8% of the observations). In the error analysis, these observations had a higher MAE (0.629) and were often under-predicted, so the reported errors for **higher-value houses** should be interpreted with caution.
+
+   Error also grows with the house value, and the model tends to under-predict the most expensive houses.
 
 3. **Simplified modelling process**
 
@@ -182,6 +196,7 @@ This project has some **limitations** that should be considered when interpretin
 
 - Feature engineering.
 - Testing **additional regression models**.
+- Exploring approaches that handle the **censored target** and improve predictions for high-value houses.
 - Using external and more recent real estate datasets.
 - Deploy as an API for public use.
 
