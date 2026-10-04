@@ -14,6 +14,7 @@ import json
 
 from src.analysis import (
     analyze_error_by_value_range,
+    analyze_target_cap,
     build_error_frame,
     summarize_residuals,
 )
@@ -72,10 +73,14 @@ def main():
         range_summary,
         output_path=f"{IMAGE_DIR}/error-by-value-range.png")
 
+    cap_summary = analyze_target_cap(error_frame)
+    save_json(cap_summary, f"{OUTPUT_DIR}/target_cap_analysis.json")
+
     print(f"Test MAE: {residual_summary['mae']:.3f}")
     print(f"Residual mean: {residual_summary['residual_mean']:.3f}")
     print(f"Residual skew: {residual_summary['residual_skew']:.3f}")
     print(range_summary.round(3).to_string(index=False))
+    print(json.dumps(cap_summary, indent=2))
 
 
 if __name__ == "__main__":

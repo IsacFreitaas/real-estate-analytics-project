@@ -99,3 +99,41 @@ def analyze_error_by_value_range(
     summary.index.name = "value_range"
 
     return summary.reset_index()
+
+TARGET_CAP = 5.0
+
+def analyze_target_cap(error_frame, cap=TARGET_CAP):
+    """
+    Compare prediction errors for observations at the target cap with the rest.
+
+    The California Housing target appears censored at about 5.0 ($500k).
+    Observations with `actual >= cap` are treated as capped.
+
+    Args:
+            error_frame (pd.DataFrame): Output of `build_error_frame`.
+            cap (float): Target cap value.
+
+    Returns:
+            dict: Counts, MAE and bias for capped and non-capped groups, and
+            how often capped observations are predicted well below the cap.
+    """
+
+    capped = error_frame[error_frame["actual"] >= cap]
+    uncapped = error_frame[error_frame["actual"] < cap]
+    total_error = error_frame["abs_error"].sum()
+
+    return {
+        "cap": cap,
+        "n_capped": int(len(capped)),
+        "share_capped": float(len(capped) / len(error_frame)),
+        "capped_mae": float(capped["abs_error"].mean()),
+        "capped_mean_residual": float(capped["residual"].mean()),
+        "capped_mean_prediction": float(capped["predicted"].mean()),
+        "capped_share_predicted_below_4": float(
+            (capped["predicted"] < 4.0).mean()),
+        "capped_share_of_total_error": float(
+            capped["abs_error"].sum() / total_error),
+        "uncapped_mae": float(uncapped["abs_error"].mean()),
+        "uncapped_mean_residual": float(uncapped["residual"].mean()),
+        "max_prediction": float(error_frame["predicted"].max()),
+    }
