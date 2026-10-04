@@ -1,5 +1,15 @@
 import matplotlib.pyplot as plt
 
+def _show_or_save(output_path=None):
+    """Save the current figure to `output_path`, or display it if omitted."""
+
+    if output_path:
+        plt.tight_layout()
+        plt.savefig(output_path, dpi=150, bbox_inches="tight")
+        plt.close()
+    else:
+        plt.show()
+
 def plot_model_comparison(results, output_path=None):
     """
     Plot MAE comparison between models.
@@ -27,13 +37,14 @@ def plot_model_comparison(results, output_path=None):
     else:
         plt.show()
 
-def plot_actual_vs_predicted(y_true, predictions):
+def plot_actual_vs_predicted(y_true, predictions, output_path=None):
     """
     Compare actual values with model predictions.
 
     Args:
             y_true: Actual values.
             predictions: Predicted values.
+            output_path (str, optional): Save path for the plot.
     """
 
     plt.figure(figsize=(8, 6))
@@ -52,7 +63,7 @@ def plot_actual_vs_predicted(y_true, predictions):
     plt.ylabel("Predicted House Value")
     plt.title("Actual vs. Predicted House Values")
 
-    plt.show()
+    _show_or_save(output_path)
 
 def plot_feature_importance(feature_importance):
     """
@@ -77,13 +88,14 @@ def plot_feature_importance(feature_importance):
 
     plt.show()
 
-def plot_residuals(predictions, residuals):
+def plot_residuals(predictions, residuals, output_path=None):
     """
     Plot residuals against predicted values.
 
     Args:
         predictions: Model predictions.
         residuals: Prediction residuals.
+        output_path (str, optional): Save path for the plot.
     """
 
     plt.figure(figsize=(8, 6))
@@ -103,14 +115,15 @@ def plot_residuals(predictions, residuals):
     plt.ylabel("Residual")
     plt.title("Residuals vs. Predicted Values")
 
-    plt.show()
+    _show_or_save(output_path)
 
-def plot_residual_distribution(residuals):
+def plot_residual_distribution(residuals, output_path=None):
     """
     Plot the distribution of model residuals.
 
     Args:
         residuals: Prediction residuals.
+        output_path (str, optional): Save path for the plot.
     """
 
     plt.figure(figsize=(8, 5))
@@ -123,4 +136,4 @@ def plot_residual_distribution(residuals):
     plt.ylabel("Frequency")
     plt.title("Distribution of Residuals")
 
-    plt.show()
+    _show_or_save(output_path)
