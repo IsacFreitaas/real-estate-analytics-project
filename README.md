@@ -256,11 +256,9 @@ real-estate-analytics-project
 - **`tests/`:** Pytest tests for data integrity, MAE calculation, and pipeline behavior.
 - **`outputs/`:** JSON/CSV results and `images/error-analysis/` for diagnostic plots.
 
-## 13. Contact
+## 13. About me
+
+Isac Freitas - Data Scientist
 
 - LinkedIn: https://www.linkedin.com/in/isac-freitas-16a035223/
 - Email: isaczeitgeist+contatogithub@gmail.com
-
-<p>
-  <img src="images/Isac-Freitas-LinkedIn-Banner.jpg">
-</p>
