@@ -75,12 +75,13 @@ The reusable code lives in `src/` (`data.py`, `preprocessing.py`, `pipeline.py`,
 I have used the following **technologies and tools** throughout this project:
 
 - [Python 3.14](https://www.python.org)
-- [Pandas](https://pandas.pydata.org)
-- [Matplotlib](https://matplotlib.org)
-- [Seaborn](https://seaborn.pydata.org)
-- [Scikit-learn](https://scikit-learn.org/)
+- [Pandas](https://pandas.pydata.org) and [NumPy](https://numpy.org)
+- [Matplotlib](https://matplotlib.org) and [Seaborn](https://seaborn.pydata.org)
+- [Scikit-learn](https://scikit-learn.org/) and [SciPy](https://scipy.org)
 - [XGBoost](https://xgboost.readthedocs.io/)
 - [Jupyter Notebook](https://jupyter.org)
+- [Pytest](https://pytest.org) and [Ruff](https://docs.astral.sh/ruff/)
+- [GitHub Actions](https://docs.github.com/actions)
 
 ## 6. Main **Insights**
 
@@ -257,19 +258,34 @@ This project has some **limitations** that should be considered when interpretin
 
 ## 10. How to Run
 
+The project was developed and validated with **Python 3.14.7**. All dependency versions are pinned:
+
+| Package | Version |
+|---|---:|
+| pandas | 3.0.5 |
+| NumPy | 2.5.2 |
+| scikit-learn | 1.9.0 |
+| SciPy | 1.18.1 |
+| matplotlib | 3.11.1 |
+| seaborn | 0.13.2 |
+| XGBoost | 3.4.1 |
+| notebook | 7.6.3 |
+| pytest (development) | 9.1.1 |
+| Ruff (development) | 0.16.10 |
+
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/IsacFreitaas/real-state-analytics-project
+git clone https://github.com/IsacFreitaas/real-estate-analytics-project
 ```
 
 ### 2. Navigate to the project directory
 ```bash
-cd real-state-analytics-project
+cd real-estate-analytics-project
 ```
 
 ### 3. Create a [virtual environment](https://youtu.be/kyiLBafjpMQ)
 ```bash
-python -m venv venv
+python -m venv .venv
 ```
 
 ### 4. Activate the virtual environment
@@ -277,13 +293,13 @@ python -m venv venv
 macOS/Linux:
 
 ```bash
-source venv/bin/activate
+source .venv/bin/activate
 ```
 
 Windows:
 
 ```bash
-venv\Scripts\activate
+.venv\Scripts\activate
 ```
 
 ### 5. Install the dependencies
@@ -292,74 +308,137 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 6. Start Jupyter Notebook
-```bash
-jupyter notebook
-```
-
-Then, execute the notebooks **in the order**.
-
-### 7. Run the tests and linting
-
-With the virtual environment activated, install the development dependencies:
+To also install the testing and linting tools, use `requirements-dev.txt` instead (it includes `requirements.txt`):
 
 ```bash
 pip install -r requirements-dev.txt
 ```
 
-Then run the tests and the linter:
+### 6. Start Jupyter Notebook
+```bash
+jupyter notebook
+```
+
+Then, execute the notebooks **in the order** (`1. EDA.ipynb`, then `2. Modelling.ipynb`) from the `notebooks/` folder.
+
+### 7. Reproduce the final results
+
+Run the scripts from the project root:
+
+```bash
+python -m scripts.model_comparison   # CV comparison and final test evaluation
+python -m scripts.xgb_tuning         # RandomizedSearchCV for XGBoost (the slowest step)
+python -m scripts.error_analysis     # error analysis of the optimized XGBoost
+```
+
+Results are written to `outputs/` and the plots to `images/`. The exact versions used to verify reproducibility are also listed in `requirements-locked.txt` (see [docs/reproducibility.md](docs/reproducibility.md)).
+
+### 8. Run the tests and linting
+
+With the virtual environment activated and the development dependencies installed:
 
 ```bash
 python -m pytest
 ruff check .
 ```
 
-The same two commands run automatically on GitHub Actions (`.github/workflows/ci.yml`) for pushes and for Pull Requests targeting `develop` or `main`.
+Notebooks are intentionally not linted: reusable and testable code lives in `src/`, while the notebooks hold the exploratory analysis and the project narrative.
+
+## 11. Continuous Integration
+
+The GitHub Actions workflow in `.github/workflows/ci.yml` runs on pushes and on Pull Requests targeting `develop` or `main`:
+
+```text
+Pull Request / Push
+        ↓
+Install dependencies
+        ↓
+Ruff
+        ↓
+Pytest
+        ↓
+PASS / FAIL
+```
+
+Introducing automated linting revealed a small number of existing style issues in the project. These were corrected before enabling the CI workflow, ensuring that future changes are automatically checked for the same class of problems.
 
 ## 12. Project Structure
 
 ```text
 real-estate-analytics-project
+├── .github/workflows/
+│   └── ci.yml
+├── docs/
+│   ├── error_analysis.md
+│   ├── repo_review.md
+│   └── reproducibility.md
 ├── images/
-│   └── Isac-Freitas-LinkedIn-Banner.jpg
-│   └── feature-importance.png
-│   └── geographic-distribution.png
-│   └── house-value-distribution.png
-│   └── median-income-vs-house-value.png
-│   └── model-comparison.png
-│   └── model-comparison-optimized-xgb.png
-│   └── real-estate-thumbnail.jpg
-│
+│   ├── error-analysis/
+│   └── (EDA, model comparison and thumbnail images)
 ├── notebooks/
 │   ├── 1. EDA.ipynb
 │   └── 2. Modelling.ipynb
-│
+├── outputs/
+│   ├── error_analysis/
+│   └── (CV, test and tuning results in JSON)
+├── scripts/
+│   ├── check_repro.sh
+│   ├── cv_demo.py
+│   ├── error_analysis.py
+│   ├── model_comparison.py
+│   ├── pipeline_demo.py
+│   └── xgb_tuning.py
 ├── src/
 │   ├── __init__.py
+│   ├── analysis.py
+│   ├── cv.py
 │   ├── data.py
 │   ├── evaluation.py
+│   ├── models.py
+│   ├── pipeline.py
+│   ├── preprocessing.py
+│   ├── repro.py
+│   ├── tuning.py
 │   └── visualization.py
-│
+├── tests/
+│   ├── __init__.py
+│   ├── test_data.py
+│   ├── test_evaluation.py
+│   └── test_pipeline.py
 ├── .gitattributes
 ├── .gitignore
+├── pyproject.toml
 ├── README.md
-└── requirements.txt
+├── requirements.txt
+├── requirements-dev.txt
+└── requirements-locked.txt
 ```
 
 ### `notebooks/`
 
-It contains the Jupyter Notebooks used for the **exploratory data analysis** and **machine learning workflow**.
+It contains the Jupyter Notebooks used for the **exploratory data analysis** and the **initial modelling workflow**.
 
 - `1. EDA.ipynb`: Exploratory analysis of the dataset and identification of relevant patterns.
-- `2. Modelling.ipynb`: Data preparation, model training, evaluation, and interpretation of the results.
+- `2. Modelling.ipynb`: Single-split modelling of the baseline, Linear Regression and Random Forest, with residual analysis and feature importance. The cross-validated comparison, XGBoost tuning and final error analysis are produced by the scripts in `scripts/`.
 
 ### `src/`
 
 Contains **reusable Python modules** used throughout the project.
 
-- `data.py`: Dataset loading functions.
-- `evaluation.py`: Functions for evaluating model performance.
-- `visualization.py`: Reusable visualization functions used during model evaluation.
+- `data.py`: Dataset loading and train/test split.
+- `preprocessing.py` and `pipeline.py`: Preprocessing step and the model `Pipeline` builder.
+- `models.py`: Baseline, Linear Regression, Random Forest and XGBoost pipelines.
+- `cv.py` and `tuning.py`: Cross-validation and the XGBoost `RandomizedSearchCV`.
+- `evaluation.py`: MAE and error reduction.
+- `analysis.py`: Residual, value-range and target-cap error analysis.
+- `visualization.py`: Reusable plotting functions.
+- `repro.py`: Central random seed.
+
+### `scripts/`, `outputs/` and `tests/`
+
+- `scripts/`: Runnable entry points that reproduce the results (`python -m scripts.<name>`).
+- `outputs/`: JSON/CSV results generated by the scripts.
+- `tests/`: Pytest tests for data validation, MAE and the model pipelines.
 
 ## 13. [Get in touch](https://linktr.ee/isaczeitgeistpy)
 
