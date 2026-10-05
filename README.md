@@ -144,31 +144,31 @@ The **exploratory data analysis** that have been performed revealed several **re
 
 ## 8. Results
 
-The models were evaluated using **Mean Absolute Error (MAE)**, where lower values indicate predictions that are, on average, closer to the **actual house values**.
+The models were evaluated using **Mean Absolute Error (MAE)**, where lower values indicate predictions that are, on average, closer to the **actual house values**. The target is expressed in units of US$100,000, so an MAE of 0.29 corresponds to an average error of approximately US$29,000.
 
-| Model | CV MAE | Test MAE |
-|---|---:|---:|
-| Baseline | 0.914 | 0.906 |
-| Linear Regression | 0.529 | 0.533 |
-| Random Forest | 0.335 | 0.328 |
-| XGBoost (optimized) | 0.294 | 0.290 |
+Cross-validation (CV) results are the mean MAE over 5 folds of the training set, and test results come from the untouched test set (4,128 observations). Each column must be compared only with itself.
 
-Among the initial baseline models, **Random Forest** was the best performer. After hyperparameter tuning,
-the **optimized XGBoost** pipeline achieved the best overall results.
+| Model | CV MAE (mean ± std) | Test MAE | Test error (USD) |
+|---|---:|---:|---:|
+| Baseline (mean of training target) | 0.914 ± 0.010 | 0.906 | ~US$90,600 |
+| Linear Regression | 0.529 ± 0.009 | 0.533 | ~US$53,300 |
+| Random Forest | 0.335 ± 0.005 | 0.328 | ~US$32,800 |
+| XGBoost (default parameters) | 0.316 ± 0.007 | 0.311 | ~US$31,100 |
+| **XGBoost (optimized)** | **0.294 ± 0.005** | **0.290** | **~US$29,000** |
+
+The **optimized XGBoost** pipeline achieved the lowest MAE in both cross-validation and the final test evaluation. The CV and test values are close for every model, which suggests the selection process did not overfit the training folds.
 
 <p align="left">
    <img src="images/model-comparison-optimized-xgb.png" width="500">
 </p>
 
-* Compared to the baseline, the optimized XGBoost reduced the final test error by approximately **67.95%**.
+The chart shows the cross-validation MAE of each model.
 
-* Compared to Random Forest, the optimized XGBoost achieved an additional test error reduction of approximately **11.59%**.
+* Compared to the baseline, the optimized XGBoost reduced the test error by approximately **67.99%**.
 
-<p align="left">
-   <img src="images/model-comparison.png" width="500">
-</p>
+* Compared to Random Forest, the optimized XGBoost reduced the test error by approximately **11.53%**.
 
-The original single-split comparison remains available above for reference.
+* Compared to the default XGBoost, tuning reduced the test error by approximately **6.66%**.
 
 ------
 
