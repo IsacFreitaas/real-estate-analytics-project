@@ -244,6 +244,23 @@ jupyter notebook
 
 Then, execute the notebooks **in the order**.
 
+### 7. Run the tests and linting
+
+With the virtual environment activated, install the development dependencies:
+
+```bash
+pip install -r requirements-dev.txt
+```
+
+Then run the tests and the linter:
+
+```bash
+python -m pytest
+ruff check .
+```
+
+The same two commands run automatically on GitHub Actions (`.github/workflows/ci.yml`) for pushes and for Pull Requests targeting `develop` or `main`.
+
 ## 12. Project Structure
 
 ```text

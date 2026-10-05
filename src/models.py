@@ -6,6 +6,7 @@ from xgboost import XGBRegressor
 from src.pipeline import build_model_pipeline
 from src.repro import RANDOM_STATE
 
+
 def build_baseline_pipeline():
     """
     Build the baseline pipeline: predicts the mean training target value
