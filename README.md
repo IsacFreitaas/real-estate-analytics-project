@@ -2,8 +2,6 @@
 
 <img src="images/real-estate-thumbnail.jpg">
 
-> **V2 in progress:** see [docs/repo_review.md](docs/repo_review.md) for the current repository review and implementation plan.
-
 ## 1. Project **Description**
 
 * In this project, I have combined **exploratory data analysis** and **machine learning to investigate** the factors associated with **real estate prices** by analyzing the relationship between socioeconomic, demographic, and geographic characteristics and house values, using the California housing dataset as **a case study**.
@@ -40,15 +38,37 @@ I have used the **following analytical pipeline** throughout this project:
 2. **Explore** the data and **identify relevant patterns**.
 3. **Analyze** the relationship between the **available features and house values**.
 4. Prepare the data for **machine learning**.
-5. Split the data into **training and testing sets**.
+5. Split the data once into **training and test sets**.
 6. Establish a **baseline** for model evaluation.
-7. **Train and compare** machine learning models.
-8. Evaluate the **best-performing model**.
-9. Interpret the results and discuss the limitations.
+7. **Compare** the models with **cross-validation** on the training set and **tune** the best candidate.
+8. Evaluate the **final model once** on the untouched test set.
+9. Analyze the prediction errors, interpret the results and discuss the limitations.
 
 **The workflow** that I have implemented in this project **aligns with established data science frameworks** like **CRISP-DM** and **OSEMN**, structured into the **pipeline above**.
 
-Each stage is documented in detail throughout the notebooks of this project.
+The exploratory analysis and the initial modelling are documented in the notebooks. The final cross-validated comparison, the tuning and the error analysis are reproducible through the scripts in `scripts/`.
+
+### Machine learning architecture
+
+```text
+Train/test split (80/20, fixed seed)
+        ↓
+Training set ──► 5-fold cross-validation ──► model comparison and tuning
+        ↓
+Final pipeline fitted on the training set
+        ↓
+Untouched test set ──► single final evaluation
+```
+
+* **Pipeline:** every model is wrapped in a scikit-learn `Pipeline` that combines a preprocessing step (`ColumnTransformer` with a median imputer for the numeric features) and the estimator. The same object is used for cross-validation, tuning, final evaluation and error analysis.
+
+* **Cross-validation:** the training set is split into 5 folds (`KFold`, shuffled, fixed seed). Each model is trained on 4 folds and scored on the remaining one, and the **mean MAE** across folds is used to compare models.
+
+* **Data leakage:** because preprocessing lives inside the `Pipeline`, it is fitted only on the training folds of each split and never sees the validation fold or the test set. The test set is not used for model selection or tuning; it is used once, at the end.
+
+* **Reproducibility:** the split, the folds and the stochastic models use a single seed (`RANDOM_STATE = 42`, defined in `src/repro.py`).
+
+The reusable code lives in `src/` (`data.py`, `preprocessing.py`, `pipeline.py`, `models.py`, `cv.py`, `tuning.py`, `evaluation.py`, `analysis.py`, `visualization.py`).
 
 ## 5. Technologies and Tools
 
