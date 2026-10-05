@@ -134,11 +134,35 @@ The **exploratory data analysis** that have been performed revealed several **re
 
 * Random Forest Regressor was used as the second machine learn model to **capture more complex** and potentially non-linear **relationships between the available features and house values**.
 
-### **Optimized XGBoost model**
+### **XGBoost model**
 
-* XGBoost was added as a third model and tuned with **RandomizedSearchCV** on the training set only.
+* XGBoost was added as a third model because gradient-boosted trees often perform well on tabular data. With default parameters it already improved on Random Forest (CV MAE 0.316 vs 0.335).
 
-* The final optimized pipeline was selected using **cross-validation** and evaluated once on the untouched test set.
+### **Hyperparameter optimization**
+
+* The XGBoost hyperparameters were tuned with **RandomizedSearchCV**, which samples a fixed number of configurations from predefined ranges instead of testing every combination.
+
+* The search used **20 sampled configurations**, each scored with the **5-fold cross-validated MAE** on the **training set only**. Cross-validation estimates how each configuration generalizes without touching the test set.
+
+* The searched ranges are defined in `src/tuning.py` (`n_estimators`, `max_depth`, `learning_rate`, `subsample`, `colsample_bytree`, `min_child_weight`, `gamma`, `reg_alpha` and `reg_lambda`).
+
+* The best configuration was refitted on the full training set and evaluated once on the test set:
+
+| Hyperparameter | Selected value |
+|---|---:|
+| `n_estimators` | 307 |
+| `max_depth` | 8 |
+| `learning_rate` | 0.0476 |
+| `min_child_weight` | 5 |
+| `subsample` | 0.876 |
+| `colsample_bytree` | 0.798 |
+| `gamma` | 0.0004 |
+| `reg_alpha` | 0.0095 |
+| `reg_lambda` | 3.46 |
+
+* These values are the result of a limited random search (20 samples) on this dataset and split. They should not be interpreted as universally optimal, and a different seed or a larger search could select a different configuration.
+
+* The full search summary is saved in `outputs/xgb_random_search.json` and can be reproduced with `python -m scripts.xgb_tuning`.
 
 ------
 
