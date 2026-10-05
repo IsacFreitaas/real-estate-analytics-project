@@ -196,25 +196,36 @@ The chart shows the cross-validation MAE of each model.
 
 ------
 
-The **feature importance analysis** showed that `MedInc` was the most **influential variable** in the **Random Forest Regressor** model, reinforcing the relationship identified during the exploratory data analysis.
+### **Error analysis**
+
+The errors of the optimized XGBoost were analyzed on the test set (details in [docs/error_analysis.md](docs/error_analysis.md); reproducible with `python -m scripts.error_analysis`):
+
+* The residuals (actual − predicted) are centered near zero (mean −0.001), but they are positively skewed: most predictions are close (median absolute error 0.184), while a minority of large under-predictions raises the MAE to 0.290.
+* The error **increases with the house value**: MAE is 0.198 for houses valued up to US$100,000 and 0.623 for houses above US$400,000.
+* Houses above US$400,000 are 8.2% of the test samples but account for 17.6% of the total absolute error, and the model tends to **under-predict** them.
+* Observations at the **target cap** (US$500,000) have an MAE of 0.629, against 0.274 for the remaining observations.
+
+<p align="left">
+   <img src="images/error-analysis/actual-vs-predicted.png" width="500">
+</p>
+
+The points follow the diagonal, and the horizontal band at the actual value of 5.0 corresponds to the capped observations.
+
+<p align="left">
+   <img src="images/error-analysis/error-by-value-range.png" width="700">
+</p>
+
+### **Feature importance**
+
+The **feature importance** of the **Random Forest Regressor** (impurity-based, from the modelling notebook) was used to interpret which variables the model relied on. It was not computed for the final XGBoost model.
 
 <p align="left">
   <img src="images/feature-importance.png" width="500">
 </p>
 
-`AveOccup`, `Latitude`, and `Longitude` also contributed relevant information to the predictions.
-
-### **Error analysis**
-
-The errors of the optimized XGBoost were analyzed on the test set (see [docs/error_analysis.md](docs/error_analysis.md)):
-
-* The mean residual is close to zero, but the error **increases with the house value**: MAE is 0.198 for houses valued up to US$100,000 and 0.623 for houses above US$400,000.
-* Houses above US$400,000 are 8.2% of the test samples but account for 17.6% of the total absolute error, and the model tends to **under-predict** them.
-* Observations at the **target cap** (US$500,000) have an MAE of 0.629, against 0.274 for the remaining observations.
-
-<p align="left">
-   <img src="images/error-analysis/error-by-value-range.png" width="700">
-</p>
+* `MedInc` showed the highest importance (about 52.5% of the total), consistent with its strong correlation with `MedHouseVal` in the exploratory analysis.
+* `AveOccup` (13.8%), `Latitude` (8.9%) and `Longitude` (8.9%) came next. The two coordinates together contribute about 17.7%, which suggests that location carries information about house values beyond what the linear correlations show.
+* Feature importance describes how much the model used each variable, not a causal effect on house prices.
 
 ## 9. Limitations and Future Improvements
 
