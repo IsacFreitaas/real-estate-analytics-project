@@ -112,7 +112,7 @@ Cross-validation (CV) results are the mean MAE over 5 folds of the training set,
 | XGBoost (default parameters) | 0.316 ± 0.007 | 0.311 | ~US$31,100 |
 | **XGBoost (optimized)** | **0.294 ± 0.005** | **0.290** | **~US$29,000** |
 
-The **optimized XGBoost** pipeline achieved the lowest MAE in both cross-validation and the final test evaluation. The CV and test values are close for every model, which suggests the selection process did not overfit the training folds.
+The **optimized XGBoost** pipeline achieved the lowest MAE in the hyperparameter search and on the final test evaluation. Its CV MAE is the best score selected from the 20 sampled configurations, so it is selection-biased and should not be interpreted as an unbiased generalization estimate. The Test MAE is the final evaluation on the untouched test set.
 
 <p align="left">
    <img src="images/model-comparison-optimized-xgb.png" width="500">
@@ -177,7 +177,7 @@ git clone https://github.com/IsacFreitaas/real-estate-analytics-project
 cd real-estate-analytics-project
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+pip install -r requirements-dev.txt  # runtime + Jupyter, Pytest and Ruff
 
 # Explore
 jupyter notebook  # Run 1. EDA.ipynb, then 2. Modelling.ipynb
@@ -187,8 +187,8 @@ python -m scripts.model_comparison
 python -m scripts.xgb_tuning
 python -m scripts.error_analysis
 python -m scripts.xgb_feature_importance
-# Test (with requirements-dev.txt)
-pip install -r requirements-dev.txt
+
+# Test
 python -m pytest
 ruff check .
 ```

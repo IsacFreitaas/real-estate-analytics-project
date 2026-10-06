@@ -40,6 +40,21 @@ pip install -r requirements.txt
 Versions verified: Python 3.14.7, scikit-learn 1.9.0, pandas 3.0.5,
 numpy 2.5.2, xgboost 3.4.1 (all pinned in `requirements.txt`).
 
+## Hyperparameter search and final evaluation
+
+The optimized XGBoost CV MAE (`0.294`) is the best cross-validation score
+selected from 20 sampled configurations by `RandomizedSearchCV`. Since the
+same CV process both scores and selects the winning configuration, this value
+is subject to selection bias and is not an unbiased estimate of
+generalization performance. It remains useful for documenting the search
+result, but should not be interpreted like an independent evaluation.
+
+The untouched test set is used only after model selection and tuning. Its
+Test MAE (`0.290`) is the final performance evaluation for the selected
+optimized model. Error analysis on the test set is descriptive only and does
+not feed back into model or hyperparameter selection. No nested
+cross-validation is performed.
+
 ## Centralized configuration
 
 All `random_state` values used across the project are read from a single
