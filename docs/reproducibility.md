@@ -1,7 +1,5 @@
 # Reproducibility
 
-> Produced for Issue #5 — Verify Reproducibility.
-
 ## What was verified
 
 - **Train/test split**: `src/data.py:split_train_test()` uses a fixed
@@ -10,22 +8,26 @@
 - **Cross-validation**: `src/cv.py:run_cross_validation()` uses
   `KFold(shuffle=True, random_state=...)` with the same centralized seed,
   so fold assignment is identical across runs.
-- **Model reproducibility**: `RandomForestRegressor` is seeded via
-  `random_state` (Issue #4); `LinearRegression` and the `DummyRegressor`
+- **Model reproducibility**: `RandomForestRegressor` and `XGBRegressor` are
+  seeded via `random_state`; `LinearRegression` and the `DummyRegressor`
   baseline are deterministic by construction and require no seed.
+- **Hyperparameter search**: `RandomizedSearchCV` in `src/tuning.py` uses the
+  same seed and the same shuffled `KFold`, and only sees the training set.
 - **Metric calculation**: `src/evaluation.py:calculate_mae()` and the
   `neg_mean_absolute_error` scorer used in `src/cv.py` are deterministic
   given the same predictions.
 - **End-to-end check**: `scripts/check_repro.sh` runs
   `python -m scripts.model_comparison` twice and diffs
   `outputs/model_comparison_cv.json` and `outputs/final_test_evaluation.json`
-  between runs. Both runs produced byte-identical results:
+  between runs (including the XGBoost files `outputs/xgb_cv.json` and
+  `outputs/xgb_test.json`). Both runs produced byte-identical results:
 
   ```text
   Baseline CV MAE: 0.914 (+/- 0.010)
   Linear Regression CV MAE: 0.529 (+/- 0.009)
   Random Forest CV MAE: 0.335 (+/- 0.005)
-  Best model by CV: Random Forest | final test MAE: 0.328
+  XGBoost CV MAE: 0.316 (+/- 0.007)
+  Best model by CV: XGBoost | final test MAE: 0.311
   ```
 
 ## How to reproduce
@@ -56,9 +58,6 @@ constant, `RANDOM_STATE` in `src/repro.py`, imported by `src/data.py`,
   and produce small differences in model coefficients or splits.
   `requirements-locked.txt` pins the exact versions used to produce the
   results above.
-- **Notebook execution order**: `notebooks/2. Modelling.ipynb` still
-  duplicates the train/test split and model training inline (not yet
-  migrated to `src/pipeline.py` / `src/models.py`); re-running notebook
-  cells out of order, or with a different `random_state` typed manually,
-  would not reproduce the same numbers. This is a known limitation to
-  address when the notebooks are updated in Issue #10.
+- **Notebook execution order**: `notebooks/2. Modelling.ipynb` reuses the
+  split, pipelines and cross-validation from `src/`, but its cells depend on
+  each other; run it from top to bottom to reproduce the reported numbers.
