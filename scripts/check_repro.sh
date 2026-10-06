@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Runs the model comparison pipeline twice and confirms both runs produce
-# byte-identical CV/test results, verifying reproducibility (Issue #5).
+# byte-identical CV/test results, verifying reproducibility.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."

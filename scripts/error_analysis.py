@@ -1,5 +1,5 @@
 """
-Descriptive error analysis of the optimized XGBoost pipeline (Issue #8).
+Descriptive error analysis of the optimized XGBoost pipeline.
 
 The pipeline is rebuilt from the best parameters recorded by the tuning step
 (outputs/xgb_random_search.json) and fitted on the training split only. The

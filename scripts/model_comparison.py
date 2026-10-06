@@ -1,7 +1,7 @@
 """
-Runs the same 5-fold cross-validation methodology (Issue #3) for all models
-adapted to the new architecture (Issue #4) on the training set only, then
-evaluates the best CV model and XGBoost on the untouched test set.
+Runs the same 5-fold cross-validation methodology for all models on the
+training set only, then evaluates the best CV model and XGBoost on the
+untouched test set.
 
 Run with:
     python -m scripts.model_comparison

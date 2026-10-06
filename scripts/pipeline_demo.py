@@ -1,5 +1,5 @@
 """
-Demonstrates fitting the reusable Pipeline (Issue #2) on the training split
+Demonstrates fitting the reusable Pipeline on the training split
 only, confirming preprocessing never sees the test data before evaluation.
 
 Run with:

@@ -1,5 +1,5 @@
 """
-Demonstrates reproducible 5-fold cross-validation (Issue #3) on the training
+Demonstrates reproducible 5-fold cross-validation on the training
 split only, followed by a single final evaluation on the untouched test set.
 
 Run with:
