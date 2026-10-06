@@ -33,12 +33,12 @@
 ## How to reproduce
 
 ```bash
-pip install -r requirements-locked.txt
+pip install -r requirements.txt
 ./scripts/check_repro.sh
 ```
 
 Versions verified: Python 3.14.7, scikit-learn 1.9.0, pandas 3.0.5,
-numpy 2.5.2 (full list in `requirements-locked.txt`).
+numpy 2.5.2, xgboost 3.4.1 (all pinned in `requirements.txt`).
 
 ## Centralized configuration
 
@@ -56,7 +56,7 @@ constant, `RANDOM_STATE` in `src/repro.py`, imported by `src/data.py`,
 - **Package version drift**: upgrading `scikit-learn`, `numpy`, or their
   underlying BLAS/LAPACK libraries can change internal numerical routines
   and produce small differences in model coefficients or splits.
-  `requirements-locked.txt` pins the exact versions used to produce the
+  `requirements.txt` pins the exact versions used to produce the
   results above.
 - **Notebook execution order**: `notebooks/2. Modelling.ipynb` reuses the
   split, pipelines and cross-validation from `src/`, but its cells depend on
