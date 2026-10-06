@@ -149,14 +149,15 @@ The points follow the diagonal, and the horizontal band at the actual value of 5
 
 ### Feature importance
 
-The **feature importance** of the **Random Forest Regressor** (impurity-based, from the modelling notebook) was used to interpret which variables the model relied on. It was not computed for the final XGBoost model.
+The feature importance of the **optimized XGBoost** (gain-based, fitted on the training set only) was used to interpret which variables the final model relied on. It is reproducible with `python -m scripts.xgb_feature_importance`.
 
 <p align="left">
-  <img src="images/feature-importance.png" width="500">
+  <img src="images/xgb-feature-importance.png" width="500">
 </p>
 
-* `MedInc` showed the highest importance (about 52.5% of the total), consistent with its strong correlation with `MedHouseVal` in the exploratory analysis.
-* `AveOccup` (13.8%), `Latitude` (8.9%) and `Longitude` (8.9%) came next. The two coordinates together contribute about 17.7%, which suggests that location carries information about house values beyond what the linear correlations show.
+* `MedInc` was the most influential feature (about 51% of the total), consistent with its strong correlation with `MedHouseVal` in the exploratory analysis.
+* `AveOccup` (10.6%), `Longitude` (10.4%) and `Latitude` (9.9%) came next. The two coordinates together contribute about 20%, which suggests that location carries information about house values beyond what the linear correlations show.
+* The Random Forest importance (in the modelling notebook) gives a similar ranking, with `MedInc` at about 52.5%, which makes the pattern more reliable than a single model's ranking.
 * Feature importance describes how much the model used each variable, not a causal effect on house prices.
 
 ## 9. Limitations and Future Work
@@ -185,7 +186,7 @@ jupyter notebook  # Run 1. EDA.ipynb, then 2. Modelling.ipynb
 python -m scripts.model_comparison
 python -m scripts.xgb_tuning
 python -m scripts.error_analysis
-
+python -m scripts.xgb_feature_importance
 # Test (with requirements-dev.txt)
 pip install -r requirements-dev.txt
 python -m pytest
@@ -206,7 +207,6 @@ real-estate-analytics-project
 │   └── ci.yml
 ├── docs/
 │   ├── error_analysis.md
-│   ├── repo_review.md
 │   └── reproducibility.md
 ├── images/
 │   ├── error-analysis/
@@ -223,6 +223,7 @@ real-estate-analytics-project
 │   ├── error_analysis.py
 │   ├── model_comparison.py
 │   ├── pipeline_demo.py
+│   ├── xgb_feature_importance.py
 │   └── xgb_tuning.py
 ├── src/
 │   ├── __init__.py
@@ -240,20 +241,20 @@ real-estate-analytics-project
 │   ├── __init__.py
 │   ├── test_data.py
 │   ├── test_evaluation.py
+│   ├── test_importance.py
 │   └── test_pipeline.py
 ├── .gitattributes
 ├── .gitignore
 ├── pyproject.toml
 ├── README.md
 ├── requirements.txt
-├── requirements-dev.txt
-└── requirements-locked.txt
+└── requirements-dev.txt
 ```
 
-- **`notebooks/`:** Exploratory Data Analysis (1. EDA.ipynb) and initial modelling with baseline, Linear Regression and Random Forest (2. Modelling.ipynb).
+- **`notebooks/`:** Exploratory Data Analysis (1. EDA.ipynb) and the modelling narrative (2. Modelling.ipynb): baseline, cross-validated model comparison, XGBoost tuning, final evaluation, error analysis and feature importance.
 - **`src/`:** Reusable modules for data loading, preprocessing, model pipelines, cross-validation, tuning, evaluation, error analysis, and visualization.
-- **`scripts/`:** Reproducible entry points: `model_comparison.py` (CV and test evaluation), `xgb_tuning.py` (hyperparameter search), `error_analysis.py` (error decomposition).
-- **`tests/`:** Pytest tests for data integrity, MAE calculation, and pipeline behavior.
+- **`scripts/`:** Reproducible entry points: `model_comparison.py` (CV and test evaluation), `xgb_tuning.py` (hyperparameter search), `error_analysis.py` (error decomposition), `xgb_feature_importance.py` (final model importance); `check_repro.sh` verifies reproducibility.
+- **`tests/`:** Pytest tests for data integrity, MAE calculation, model pipelines and feature importance.
 - **`outputs/`:** JSON/CSV results and `images/error-analysis/` for diagnostic plots.
 
 ## 13. About me
