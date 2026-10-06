@@ -27,6 +27,36 @@ def build_error_frame(y_true, predictions):
 
     return frame
 
+def build_feature_importance_frame(pipeline):
+    """
+    Extract feature importance from a fitted pipeline with a tree-based model.
+
+    Feature names come from the preprocessing step, so they match the
+    columns the model actually received. Importance values describe how much
+    the model used each feature; they do not measure a causal effect.
+
+    Args:
+            pipeline: Fitted Pipeline with "preprocessing" and "model" steps,
+                    where the model exposes `feature_importances_`.
+
+    Returns:
+            pd.DataFrame: Columns `Feature` and `Importance`, sorted from the
+            most to the least important feature.
+    """
+
+    feature_names = [
+        name.split("__")[-1]
+        for name in pipeline[:-1].get_feature_names_out()
+    ]
+
+    frame = pd.DataFrame({
+        "Feature": feature_names,
+        "Importance": pipeline.named_steps["model"].feature_importances_,
+    })
+
+    return frame.sort_values(
+        "Importance", ascending=False).reset_index(drop=True)
+
 def summarize_residuals(error_frame):
     """
     Summarize the residual distribution with descriptive statistics.

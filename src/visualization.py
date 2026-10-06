@@ -66,13 +66,18 @@ def plot_actual_vs_predicted(y_true, predictions, output_path=None):
 
     _show_or_save(output_path)
 
-def plot_feature_importance(feature_importance):
+def plot_feature_importance(
+        feature_importance,
+        title="Random Forest Feature Importance",
+        output_path=None):
     """
     Plot feature importance values.
 
     Args:
         feature_importance (pd.DataFrame):
             DataFrame containing feature importance values.
+        title (str): Plot title, identifying the model that produced it.
+        output_path (str, optional): Save path for the plot.
     """
 
     plt.figure(figsize=(10, 6))
@@ -83,11 +88,11 @@ def plot_feature_importance(feature_importance):
 
     plt.xlabel("Importance")
     plt.ylabel("Feature")
-    plt.title("Random Forest Feature Importance")
+    plt.title(title)
 
     plt.gca().invert_yaxis()
 
-    plt.show()
+    _show_or_save(output_path)
 
 def plot_residuals(predictions, residuals, output_path=None):
     """
