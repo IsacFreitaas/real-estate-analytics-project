@@ -1,0 +1,13 @@
+{
+  "cap": 5.0,
+  "n_capped": 184,
+  "share_capped": 0.044573643410852716,
+  "capped_mae": 0.6290142131202114,
+  "capped_mean_residual": 0.5912746505946695,
+  "capped_mean_prediction": 4.408735275268555,
+  "capped_share_predicted_below_4": 0.22826086956521738,
+  "capped_share_of_total_error": 0.09666657196672744,
+  "uncapped_mae": 0.2742288481693505,
+  "uncapped_mean_residual": -0.028933384994224896,
+  "max_prediction": 5.237020015716553
+}

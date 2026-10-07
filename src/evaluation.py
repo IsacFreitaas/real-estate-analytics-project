@@ -1,5 +1,6 @@
 from sklearn.metrics import mean_absolute_error
 
+
 def calculate_mae(y_true, predictions):
     """
     Calculate Mean Absolute Error.

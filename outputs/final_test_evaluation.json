@@ -1,0 +1,4 @@
+{
+  "best_model": "XGBoost",
+  "test_mae": 0.31074241395526386
+}
