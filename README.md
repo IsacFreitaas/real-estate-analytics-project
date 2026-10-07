@@ -169,31 +169,86 @@ The feature importance of the **optimized XGBoost** (gain-based, fitted on the t
 
 ## 10. Getting Started
 
-Python 3.14.7; all dependency versions are pinned in `requirements.txt` and `requirements-dev.txt`.
+### Prerequisites
+
+- Git
+- Python 3.14.7
+
+### Installation
+
+Clone the repository and create a virtual environment:
 
 ```bash
-# Setup
-git clone https://github.com/IsacFreitaas/real-estate-analytics-project
+git clone https://github.com/IsacFreitaas/real-estate-analytics-project.git
 cd real-estate-analytics-project
 python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements-dev.txt  # runtime + Jupyter, Pytest and Ruff
+```
 
-# Explore
-jupyter notebook  # Run 1. EDA.ipynb, then 2. Modelling.ipynb
+Activate the virtual environment:
 
-# Reproduce
+**macOS / Linux**
+
+```bash
+source .venv/bin/activate
+```
+
+**Windows**
+
+```powershell
+.venv\Scripts\activate
+```
+
+Install the project and development dependencies:
+
+```bash
+pip install -r requirements-dev.txt
+```
+
+### Run the Notebooks
+
+Start Jupyter Notebook:
+
+```bash
+jupyter notebook
+```
+
+Then run the notebooks in order:
+
+1. `notebooks/1. EDA.ipynb`
+2. `notebooks/2. Modelling.ipynb`
+
+The notebooks document the project's exploratory analysis, model development, evaluation, and final results.
+
+### Reproduce the Analysis
+
+The main analysis components can also be reproduced using the provided scripts:
+
+```bash
 python -m scripts.model_comparison
 python -m scripts.xgb_tuning
 python -m scripts.error_analysis
 python -m scripts.xgb_feature_importance
+```
 
-# Test
-python -m pytest
+Generated results are saved under `outputs/`.
+
+### Run Tests
+
+Run the test suite with:
+
+```bash
+pytest
+```
+
+Run the linter with:
+
+```bash
 ruff check .
 ```
 
-Reusable code in `src/`; notebooks document the exploratory workflow.
+### Project Structure
+
+Reusable Python code is located in `src/`, while notebooks document the exploratory and modelling workflow.
 
 ## 11. Continuous Integration
 
