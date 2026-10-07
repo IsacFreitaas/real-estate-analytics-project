@@ -312,6 +312,10 @@ real-estate-analytics-project
 - **`tests/`:** Pytest tests for data integrity, MAE calculation, model pipelines and feature importance.
 - **`outputs/`:** JSON/CSV results and `images/error-analysis/` for diagnostic plots.
 
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
 ## 13. About me
 
 Isac Freitas - Data Scientist
